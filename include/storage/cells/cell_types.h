@@ -12,8 +12,8 @@ struct Cl_key_node {
     cell_index values_list_index;
     // todo мб убрать?? Все равно лист укажет есть ли следующий,
     // НО можно подстраховаться и проще индексировать кол-во детей и атрибутов 
-    uint32_t subkeys_amount;
-    uint32_t values_amount;
+    unsigned int subkeys_amount;
+    unsigned int values_amount;
 };
 
 /*
@@ -26,7 +26,7 @@ struct Cl_key_value {
     block_offset value_data_index;
 };
 
-/* Cell typre for storing values bigger than 4kB. 
+/* Cell type for storing values bigger than 4kB. 
 The cell has a linked list of cells, pointing to data cells which store parts big-value's parts and might belong to different blocks. 
 In that case, each element of Cl_key_index list contains cell indexes to Cl_value_data, which shoudn't be interpreted without the context of big-value. 
 Signature - Cl_sign_big_value
@@ -42,7 +42,7 @@ struct Cl_key_big_value {
 /*
 Signature 
     - Cl_sign_key_index - for subkeys list elements
-    - Cl_sign_value_index - for values list elements
+    - Cl_sign_value_index - for values list elementsэ
 */
 struct Cl_key_index {
     cell_signature sign;
@@ -52,7 +52,7 @@ struct Cl_key_index {
     cell_index next_cell;
 };
 
-/*
+/* Cell type indicates what right after it data is stored. Contains data lenght.
 Signature - Cl_sign_value_data
 */
 struct Cl_value_data {

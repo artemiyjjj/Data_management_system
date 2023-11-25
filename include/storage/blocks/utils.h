@@ -1,9 +1,7 @@
 #include <stdint.h>
 
-typedef uint32_t block_index; 
-typedef uint32_t block_offset;
-
-
+typedef unsigned int block_index; 
+typedef unsigned int block_offset;
 
 /* Signatures that defines types of blocks.
     - Type block contains available data types for the application.
@@ -13,5 +11,6 @@ typedef uint32_t block_offset;
 enum block_signature {
     Bl_sign_Head = 0,
     Bl_sign_Data,
-    Bl_sign_Types,
+    Bl_sign_Meta,
+    Bl_sign_Names,
 };
