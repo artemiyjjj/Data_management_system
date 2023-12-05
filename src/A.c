@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "common/data_structures/linked_list.h"
 
-LINKED_LIST_DECLARE(int)
 LINKED_LIST_DEFINE(int)
 
 int main(int argc, char *argv[]) {
