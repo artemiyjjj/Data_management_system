@@ -15,7 +15,8 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
         include/*.h
 )
 
-add_executable(data_storage ${sources})
+add_executable(data_storage ${sources}
+        test/src/common/data_structures_tests/tree_test.c)
 target_include_directories(data_storage PRIVATE src include)
 
 #list(FILTER sources EXCLUDE REGEX A.c)
