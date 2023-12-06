@@ -15,17 +15,22 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
         include/*.h
 )
 
-add_library(dataStorage_lib STATIC ${sources})
-target_include_directories(dataStorage_lib PUBLIC src include)
+add_executable(data_storage ${sources})
+target_include_directories(data_storage PRIVATE src include)
 
-if(EXISTS src/A.c)
-    add_executable(dataStorage_exe main.c)
-    target_link_libraries(dataStorage_exe PRIVATE dataStorage_lib)
-    set_target_properties(dataStorage_exe PROPERTIES OUTPUT_NAME dataStorage)
-endif()
+#list(FILTER sources EXCLUDE REGEX A.c)
+#add_library(dataStorage_lib STATIC ${sources})
+#target_include_directories(dataStorage_lib PUBLIC include)
+#
+#if(EXISTS A.c)
+#    add_executable(dataStorage_exe A.c)
+#    target_link_libraries(dataStorage_exe PRIVATE dataStorage_lib)
+#    set_target_properties(dataStorage_exe PROPERTIES OUTPUT_NAME dataStorage)
+#endif()
 
-option(BUILD_TESTING "Enable tests" ON)
-if(BUILD_TESTING)
-    enable_testing()
-    add_subdirectory(test)
-endif()
+
+#option(BUILD_TESTING "Enable tests" ON)
+#if(BUILD_TESTING)
+#    enable_testing()
+#    add_subdirectory(test)
+#endif()
