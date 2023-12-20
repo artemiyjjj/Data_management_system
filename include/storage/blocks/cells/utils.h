@@ -4,29 +4,30 @@
 #include <stdint.h>
 #include "storage/blocks/utils.h"
 
-/* Cell position identifier in blocks of cells. Shows cell position relative to a beggining of the block, where cell is placed in. 
+/*
+Cell position identifier in blocks of cells. Shows cell position relative to a beggining of the block, where cell is placed in.
 */
-typedef struct {
+struct cell_index {
     block_index bl_index;
     block_offset bl_offset;
-} cell_index;
+};
 
-cell_index create_cell_index(block_index, block_offset);
+struct cell_index create_cell_index(block_index, block_offset);
 
-cell_index* change_block_index(cell_index*, block_index);
+struct cell_index* change_block_index(struct cell_index*, block_index);
 
-cell_index* change_block_offset(cell_index*, block_offset);
+struct cell_index* change_block_offset(struct cell_index*, block_offset);
 
 /*
- * Defenition of a cell-structure type for cells storing different data-types.
+Signatures of cell-structure types for cells storing different data-types
+in the context of programm logic.
 */
 typedef enum {
-    Cl_sign_node = 0,
+    Cl_sign_key_node = 0,
     Cl_sign_value,
     Cl_sign_big_value,
     Cl_sign_key_index,
-    Cl_sign_value_index,
-    Cl_sign_value_data
+    Cl_sign_value_index
 } cell_signature;
 
 #endif
