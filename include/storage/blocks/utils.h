@@ -5,6 +5,7 @@
 
 typedef unsigned int block_index;
 typedef unsigned int block_offset;
+typedef unsigned int block_capasity;
 
 /* Signatures that defines types of blocks.
     - Type block contains available data types for the application.

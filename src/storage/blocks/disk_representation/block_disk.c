@@ -1,6 +1,5 @@
-#include "storage/blocks/block.h"
+#include "storage\blocks\block_disk.h"
 
-#define BLOCK_SIZE 4096
 
 // static void* create_block() {
 //
@@ -11,9 +10,5 @@
 // }
 
 // void* create_block_head() {
-//
-// }
-
-// void* create_block_types() { //todo мб убрать
 //
 // }
