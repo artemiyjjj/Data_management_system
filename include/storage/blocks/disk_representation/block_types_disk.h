@@ -6,7 +6,7 @@
 
 /* Structure for parsing block info from adress of any block. */
 struct block_common {
-    block_signature sign;
+    enum block_signature sign;
     block_index bl_index;
 };
 
@@ -18,7 +18,7 @@ struct block_common {
  continue storing
 */
 struct block_head {
-    block_signature sign;
+    enum block_signature sign;
     block_index bl_index;
     unsigned int cell_length;
     struct cell_index root_data_cell;
@@ -39,7 +39,7 @@ struct block_head {
  quickly allocate new cells.
  */
 struct block_data_fixed_cells {
-    block_signature sign;
+    enum block_signature sign;
     block_index bl_index;
     unsigned int cell_lenght;
     struct {
@@ -56,7 +56,7 @@ struct block_data_fixed_cells {
  in a block.
  */
 struct block_data_variable_cells {
-    block_signature sign;
+    enum block_signature sign;
     block_index bl_index;
     struct  {
         unsigned int free_bytes_amount;
@@ -74,7 +74,7 @@ struct block_data_variable_cells {
  for a name.
  */
 struct block_names {
-    block_signature sign;
+    enum block_signature sign;
     block_index bl_index;
     struct {
         unsigned int free_bytes_amount;
@@ -91,7 +91,7 @@ Signatures:
     - Bl_sign_meta_data_free
  */
 struct block_meta {
-    block_signature sign;
+    enum block_signature sign;
     block_index bl_index;
     block_index next_block_in_subsystem;
     struct {

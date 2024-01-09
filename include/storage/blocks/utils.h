@@ -13,19 +13,20 @@ typedef unsigned int block_capasity;
     - Head block contains positions of the data-blocks, which are containing start of a new document tree.
 */
 enum block_signature {
-    Bl_sign_head = 0,
-    Bl_sign_data,
-    Bl_sign_meta,
-    Bl_sign_names,
+    BL_SIGN_HEAD = 0,
+    BL_SIGN_DATA,
+    BL_SIGN_META,
+    BL_SIGN_NAMES,
 } ;
 
 enum block_update_mode {
-    Bl_upd_add,
-    Bl_upd_remove,
+    BL_UPD_ADD = 0,
+    BL_UPD_REMOVE,
 };
 
 enum cell_select_mode {
-    Cl_
+    CL_SELECT_BY_NAME = 0,
+    CL_SELECT_BY_VALUE
 };
 
 #endif //BLOCK_UTILS_H

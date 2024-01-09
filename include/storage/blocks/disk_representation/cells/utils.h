@@ -23,13 +23,13 @@ Signatures of cell-structure types for cells storing different data-types
 in the context of programm logic.
 */
 enum cell_signature {
-    Cl_sign_key = 0,
-    Cl_sign_value,
-    Cl_sign_big_value,
-    Cl_sign_index_key,
-    Cl_sign_index_value,
-    Cl_sign_sys_head_info,
-    Cl_sign_sys_block_avaliable,
+    CL_SIGN_KEY = 0,
+    CL_SIGN_VALUE,
+    CL_SIGN_BIG_VALUE,
+    CL_SIGN_INDEX_KEY,
+    CL_SIGN_INDEX_VALUE,
+    CL_SIGN_SYS_HEAD_INFO,
+    CL_SIGN_SYS_BLOCK_AVALIABLE,
 };
 
 #endif
