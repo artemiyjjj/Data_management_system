@@ -13,31 +13,31 @@
 struct tree_##T;                                            \
 typedef struct tree_##T* tree_##T##_ptr;                     \
 LINKED_LIST_DEFINE(tree_##T##_ptr)                              \
-typedef struct {                                            \
+struct tree_##T{                                            \
     T data;                                                 \
-    tree_##T##_ptr parent_node;                           \
-    linked_list_tree_##T##_ptr* child_nodes;                    \
-} tree_##T;                                                 \
-operations_result tree_##T##_init();                          \
-operations_result tree_##T##_create_node(const T data);                   \
-operations_result tree_##T##_add_child(const tree_##T* const parent_tree_node, tree_##T* const child_tree_node);            \
-operations_result tree_##T##_delete_node(tree_##T* const tree_node);     \
-operations_result tree_##T##_delete_subtree(tree_##T* const tree_node);
+    struct tree_##T *parent_node;                           \
+    linked_list_tree_##T##_ptr *child_nodes;                    \
+};                                                 \
+struct operations_result tree_##T##_init(void);                          \
+struct operations_result tree_##T##_create_node(const T data);                   \
+struct operations_result tree_##T##_add_child(const struct tree_##T* const parent_tree_node, struct tree_##T* const child_tree_node);            \
+struct operations_result tree_##T##_delete_node(struct tree_##T* const tree_node);     \
+struct operations_result tree_##T##_delete_subtree(struct tree_##T* const tree_node);             \
+struct operations_result tree_##T##_find_node(const struct  tree_##T* const root_tree_node, bool (*comparator)(T, T));
 
-#define TREE_DEFINE(T)                                      \
-TREE_DECLARE(T)                                             \
-operations_result tree_##T##_init() {                         \
-    operations_result result = {};                          \
-    tree_##T* tree = malloc(sizeof(*tree));                 \
+#define TREE_DEFINE(T)                                     \
+struct operations_result tree_##T##_init() {                         \
+    struct operations_result result;                          \
+    struct tree_##T* tree = malloc(sizeof(*tree));                 \
     if (tree == NULL) {                                     \
         result.code = OPERATION_FAILURE;                    \
         return result;                                      \
     }                                                       \
-    operations_result list_creation_result = linked_list_tree_##T##_ptr_init(NULL); \
+    struct operations_result list_creation_result = linked_list_tree_##T##_ptr_init(NULL); \
     if (list_creation_result.code == OPERATION_SUCCES) {                            \
         tree -> child_nodes = list_creation_result.operation_result;                \
-        tree -> data = 0;                                                           \
-        tree -> parent_node = 0;                                                    \
+        tree -> data = (T) {};                                                           \
+        tree -> parent_node = NULL;                                                    \
         result.operation_result = tree;                                             \
         result.code = OPERATION_SUCCES;                                             \
     }                                                                               \
@@ -49,9 +49,9 @@ operations_result tree_##T##_init() {                         \
 }                                                           \
 /* Adds a child tree node (2-nd parameter) to the parent tree node (1-st parameter).                                 \
  Returns operation code, operation result is invalid. */                                                              \
-operations_result tree_##T##_add_child(const tree_##T* const parent_tree_node, tree_##T* const child_tree_node) {    \
-    operations_result result = {};                                                                          \
-    operations_result list_result;                                                                              \
+struct operations_result tree_##T##_add_child(const struct tree_##T* const parent_tree_node, struct tree_##T* const child_tree_node) {    \
+    struct operations_result result;                                                                          \
+    struct operations_result list_result;                                                                              \
     if (parent_tree_node == NULL || child_tree_node == NULL) {                                               \
         result.code = OPERATION_FAILURE;                                                                    \
         return result;                                                                                      \
@@ -71,19 +71,19 @@ operations_result tree_##T##_add_child(const tree_##T* const parent_tree_node, t
     return result;                                                                                          \
 }                                                                                                           \
                                                                                                             \
-operations_result tree_##T##_create_node(const T data) {                                                    \
-    operations_result result = tree_##T##_init();                                                           \
+struct operations_result tree_##T##_create_node(const T data) {                                                    \
+    struct operations_result result = tree_##T##_init();                                                           \
     if (result.code == OPERATION_FAILURE) {                                                                 \
         return result;                                                                                      \
     }                                                                                                       \
-    tree_##T* tree = result.operation_result;                                                               \
+    struct tree_##T* tree = result.operation_result;                                                               \
     tree -> data = data;                                                                                    \
     return result;                                                                                          \
 }                                                                                                           \
                                                                                                             \
 /* Deletes single tree node. Before using the function, get sure it has no child nodes */                   \
-operations_result tree_##T##_delete_node(tree_##T* const tree_node) {                                        \
-    operations_result result = {};                                                                          \
+struct operations_result tree_##T##_delete_node(struct tree_##T* const tree_node) {                                        \
+    struct operations_result result;                                                                          \
     if (tree_node != NULL) {                                                                                \
         linked_list_tree_##T##_ptr* child_list = tree_node -> child_nodes;                                   \
         linked_list_tree_##T##_ptr* next_list;                                                                    \
@@ -102,8 +102,8 @@ operations_result tree_##T##_delete_node(tree_##T* const tree_node) {           
 }                                                                                                           \
                                                                                                             \
 /* Deletes subtree of any tree, without deleting the root node, given as an argument to the function  */    \
-operations_result tree_##T##_delete_subtree(tree_##T* const tree_node) {                                    \
-    operations_result result = {};                                                                          \
+struct operations_result tree_##T##_delete_subtree(struct tree_##T* const tree_node) {                                    \
+    struct operations_result result;                                                                          \
     if (tree_node == NULL) {                                                                                \
         result.code = OPERATION_FAILURE;                                                                    \
         return result;                                                                                      \
@@ -114,11 +114,11 @@ operations_result tree_##T##_delete_subtree(tree_##T* const tree_node) {        
         child_list = child_list -> next;                                                                    \
     }                                                                                                       \
     return result;                                                                                          \
-}
-
-
-
-
-
+                                                                                                            \
+}                                                                                                           \
+                                                                                                            \
+struct operations_result tree_##T##_find_node(const struct tree_##T* const root_tree_node, bool (*comparator)(T, T)) {    \
+/*todo tree find node function*/                                                                              \
+}                                                                                                           \
 
 #endif //TREE_H
