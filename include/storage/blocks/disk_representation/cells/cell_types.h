@@ -1,19 +1,18 @@
 #ifndef CELL_TYPES_H
 #define CELL_TYPES_H
 
-#include "storage/blocks/cells/utils.h"
+#include "storage/blocks/disk_representation/cells/utils.h"
 #include "common/data_types.h"
 #include "storage/blocks/utils.h"
 
-/*
-Cell type for stroing key entities with name, their subkeys and attributes.
+/* Cell type for stroing key entities with name, their subkeys and attributes.
 
 Contains a state structure, which values dynamicly update according to program logic.
 
 Signature - Cl_sign_key
 */
 struct Cl_key {
-    cell_signature sign;
+    enum cell_signature sign;
     struct cell_index key_name_cell;
     struct cell_index parent_cell;
     struct cell_index subkeys_list_cell;
@@ -27,7 +26,7 @@ struct Cl_key {
 Signature - Cl_sign_value
 */
 struct Cl_value {
-    cell_signature sign;
+    enum cell_signature sign;
     enum data_type value_type;
     unsigned int value_size;
     block_offset value_data_index; // todo как то поменять, чтобы значение торчало с конца клетки: либо юнион либо void* либо byte[value_size]
@@ -42,7 +41,7 @@ struct Cl_value {
  Signature - Cl_sign_big_value
 */
 struct Cl_big_value {
-    cell_signature sign;
+    enum cell_signature sign;
     struct cell_index value_name;
     /* Cell index for next element of the list of big-value cells' parts */
     struct cell_index index_cell_of_parts;
@@ -60,7 +59,7 @@ Signatures:
     - Cl_sign_value_index - list of Cl_key_value cell type (values) elements
 */
 struct Cl_index {
-    cell_signature sign;
+    enum cell_signature sign;
     /* Cell index for the Cl_value_data / Cl_key_node cell with the value's / subkeyavaliable 's data. */
     struct cell_index key_subkey_or_value_cell;
     /* Cell index for the next Cl_key_index cell, pointing to the next cell of a list.*/
@@ -72,18 +71,18 @@ struct Cl_index {
  Used in blocks of type _block_head_.
 */
 struct CL_sys_block_head_info {
+    enum cell_signature sign;
     block_index bl_index;
-    block_signature bl_sign;
+    enum block_signature bl_sign;
     unsigned int avaliable_space;
-}
+};
 
 /* Cell type for storing application meta data on blocks with data and their avaliable space for content.
 
  */
 struct Cl_sys_block_avaliable {
-    cell_signature sign;
-    cell_index cell_index;
-    cell_signature cell_signature;
+    enum cell_signature sign;
+    struct cell_index cell_index;
 
 };
 

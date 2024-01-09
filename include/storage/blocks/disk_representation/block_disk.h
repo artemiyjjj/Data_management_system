@@ -1,4 +1,3 @@
-// todo проверить корректность конст указателей на блоки
 #ifndef BLOCK_H
 #define BLOCK_H
 
@@ -23,7 +22,6 @@ void update_block_fixed_cells(struct block_data_fixed_cells *const bl_data, stru
 /* Create block data with variable cell length from memory block data. */
 struct block_data_variable_cells* create_block_data_variable_cells(struct block_data_variable_cells_mem *const bl_data_vc_mem);
 
-/* Update block data with variable cell length due to changes in corresponding memory block. */
 void update_block_variable_cells(struct block_data_variable_cells * const bl_data, struct block_data_variable_cells_mem * const bl_data_vc_mem);
 
 

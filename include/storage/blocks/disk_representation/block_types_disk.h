@@ -4,6 +4,12 @@
 #include "storage/blocks/disk_representation/cells/utils.h"
 #include "utils/types.h"
 
+/* Structure for parsing block info from adress of any block. */
+struct block_common {
+    block_signature sign;
+    block_index bl_index;
+};
+
 /* Block head contains general meta data about blocks.
 
  Stores information about all existing blocks as block index and
@@ -15,7 +21,7 @@ struct block_head {
     block_signature sign;
     block_index bl_index;
     unsigned int cell_length;
-    cell_index root_data_cell;
+    struct cell_index root_data_cell;
     struct {
         int blocks_amount;
         unsigned int occupied_cells_amount;
