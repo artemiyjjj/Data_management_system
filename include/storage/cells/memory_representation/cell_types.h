@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "common/data_types.h"
+#include "storage/blocks/utils.h"
 
 /* Cell for storing in memory value of key-value pair of document tree.
 
@@ -49,8 +50,8 @@ typedef struct CL_index_mem {
     bool changed;
     enum cell_signature sign;
     union {
-        struct CL_key_mem;
-        struct Cl_value_mem;
+        CL_key_mem key_cell;
+        CL_value_mem value_cell;
     } indexing_cell;
     struct CL_index_mem * next_index_cell;
 } CL_index_mem;
@@ -71,5 +72,8 @@ typedef struct CL_sys_block_avaliable_mem {
     enum cell_signature sign;
     // todo системные клетки и блоки
 } CL_sys_block_avaliable_mem;
+
+
+int get_mem_cell_size(const enum cell_signature cell_sign);
 
 #endif

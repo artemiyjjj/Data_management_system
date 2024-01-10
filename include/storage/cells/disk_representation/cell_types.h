@@ -1,7 +1,7 @@
 #ifndef CELL_TYPES_H
 #define CELL_TYPES_H
 
-#include "storage/blocks/disk_representation/cells/utils.h"
+#include "storage/cells/utils.h"
 #include "common/data_types.h"
 #include "storage/blocks/utils.h"
 
@@ -70,7 +70,7 @@ struct Cl_index {
 
  Used in blocks of type _block_head_.
 */
-struct CL_sys_block_head_info {
+struct Cl_sys_block_head_info {
     enum cell_signature sign;
     block_index bl_index;
     enum block_signature bl_sign;
@@ -85,6 +85,9 @@ struct Cl_sys_block_avaliable {
     struct cell_index cell_index;
 
 };
+
+int get_disk_cell_size(const enum cell_signature cell_sign);
+
 
 
 #endif //CELL_TYPES_H

@@ -1,7 +1,8 @@
 #ifndef BLOCK_TYPES_DISK_H
 #define BLOCK_TYPES_DISK_H
 
-#include "storage/blocks/disk_representation/cells/utils.h"
+#include "storage/blocks/utils.h"
+#include "storage/cells/utils.h"
 #include "utils/types.h"
 
 /* Structure for parsing block info from adress of any block. */
