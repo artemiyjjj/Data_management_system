@@ -6,6 +6,10 @@ enum search_criteria {
     BY_VALUE,
 };
 
+struct query_result {
+    char* result;
+};
+
 /* Query for reading information from document tree.
 
  Path should lead to key.
@@ -23,8 +27,8 @@ struct select_query {
     } search_params;
 };
 
-struct result_query {
-    char* result;
+struct insert_query {
+    char* path;
 };
 
 /*
