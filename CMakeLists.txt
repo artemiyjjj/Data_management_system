@@ -16,8 +16,20 @@ file(GLOB_RECURSE sources CONFIGURE_DEPENDS
 )
 
 add_executable(data_storage ${sources}
-        test/src/common/data_structures_tests/tree_test.c)
+        test/src/common/data_structures_tests/tree_test.c
+)
+
 target_include_directories(data_storage PRIVATE src include)
+
+#add:   -Werror -fsanitize=address
+target_compile_options(data_storage PRIVATE  -Wall -Wextra -pedantic -Wmissing-prototypes -Wstrict-prototypes
+        -Wno-unused-function -Wno-unused-but-set-variable
+#         -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=leak -fsanitize=undefined -fsanitize-address-use-after-scope
+        )
+# -fsanitize=address
+#target_link_options(data_storage BEFORE PRIVATE
+#         -fvisibility=hidden -fvisibility-inlines-hidden
+#)
 
 #list(FILTER sources EXCLUDE REGEX A.c)
 #add_library(dataStorage_lib STATIC ${sources})
