@@ -6,10 +6,10 @@
 
 typedef struct DT_node {
     char* DT_key_name;
-    struct data;
+    struct data data;
 } DT_node;
 
-TREE_DECLARE(DT_node)
+// TREE_DECLARE(DT_node)
 
 
 
