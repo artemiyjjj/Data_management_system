@@ -12,6 +12,7 @@
 */
 typedef struct CL_value_mem {
     bool changed;
+    struct cell_index cell_index;
     enum cell_signature sign;
     char* name;
     struct CL_value_mem *name_cell;
@@ -21,6 +22,7 @@ typedef struct CL_value_mem {
 
 typedef struct CL_key_mem {
     bool changed;
+    struct cell_index cell_index;
     enum cell_signature sign;
     char* key_name;
     struct CL_value_mem *name_cell;
@@ -32,13 +34,14 @@ typedef struct CL_key_mem {
 } CL_key_mem;
 
 
-/*
+/* Cell for storing large variables.
 
  Changes state is set then child value nodes are being changed.
  For saving changed child value, check _changed_ flag at children's state.
  */
 typedef struct CL_big_value_mem {
     bool changed;
+    struct cell_index cell_index;
     enum cell_signature sign;
     char* name;
     struct Cl_value_mem * name_cell;
@@ -48,6 +51,7 @@ typedef struct CL_big_value_mem {
 
 typedef struct CL_index_mem {
     bool changed;
+    struct cell_index cell_index;
     enum cell_signature sign;
     union {
         CL_key_mem key_cell;
@@ -62,6 +66,7 @@ typedef struct CL_index_mem {
 */
 typedef struct CL_sys_block_head_info_mem {
     enum cell_signature sign;
+    struct cell_index cell_index;
     block_index bl_index;
     enum block_signature bl_sign;
     unsigned int avaliable_space;
@@ -70,8 +75,22 @@ typedef struct CL_sys_block_head_info_mem {
 
 typedef struct CL_sys_block_avaliable_mem {
     enum cell_signature sign;
+    struct cell_index cell_index;
     // todo системные клетки и блоки
 } CL_sys_block_avaliable_mem;
+
+
+struct cell_mem_type_ref {
+    enum cell_signature sign;
+    union cell_mem_ptr {
+        struct CL_key_mem* cell_key;
+        struct CL_value_mem* cell_value;
+        struct CL_big_value_mem* cell_big_value;
+        struct CL_index_mem* cell_index;
+        struct CL_sys_block_head_info_mem* cell_head_info;
+        struct CL_sys_block_avaliable_mem* cell_avaliable;
+    } cell_mem_ptr;
+};
 
 
 int get_mem_cell_size(const enum cell_signature cell_sign);

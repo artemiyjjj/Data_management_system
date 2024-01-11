@@ -4,6 +4,7 @@
 #include "storage/cells/utils.h"
 #include "common/data_types.h"
 #include "storage/blocks/utils.h"
+#include "utils/types.h"
 
 /* Cell type for stroing key entities with name, their subkeys and attributes.
 
@@ -29,7 +30,7 @@ struct Cl_value {
     enum cell_signature sign;
     enum data_type value_type;
     unsigned int value_size;
-    block_offset value_data_index; // todo как то поменять, чтобы значение торчало с конца клетки: либо юнион либо void* либо byte[value_size]
+    byte value[];
 };
 
 /* Cell type for storing values larger than a capacity of data block.
@@ -74,7 +75,7 @@ struct Cl_sys_block_head_info {
     enum cell_signature sign;
     block_index bl_index;
     enum block_signature bl_sign;
-    unsigned int avaliable_space;
+    unsigned int bl_avaliable_space;
 };
 
 /* Cell type for storing application meta data on blocks with data and their avaliable space for content.
@@ -86,8 +87,24 @@ struct Cl_sys_block_avaliable {
 
 };
 
+
+struct cell_disk_type_ref {
+    enum cell_signature sign;
+    union cell_disk_ptr {
+		struct Cl_key* cell_key;
+        struct Cl_value* cell_value;
+        struct Cl_big_value* cell_big_value;
+        struct Cl_index* cell_index;
+        struct Cl_sys_block_head_info* cell_head_info;
+        struct Cl_sys_block_avaliable* cell_avaliable;
+    } cell_disk_ptr;
+};
+
+
 int get_disk_cell_size(const enum cell_signature cell_sign);
 
+int get_real_disk_cell_size(void* const disk_cell_ptr);
 
+int get_real_disk_cell_size_from_mem_cell(void* const mem_cell_ptr);
 
 #endif //CELL_TYPES_H

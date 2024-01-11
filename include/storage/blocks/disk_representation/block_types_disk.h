@@ -101,4 +101,15 @@ struct block_meta {
     byte block_contents[];
 };
 
+struct block_disk_type_ref {
+    enum block_signature sigm;
+    union block_disk_ptr {
+        struct block_head* block_head_ptr;
+        struct block_data_fixed_cells* block_data_fc_ptr;
+        struct block_data_variable_cells* block_data_vc_ptr;
+        struct block_names* block_names_ptr;
+        struct block_meta* block_meta_ptr;
+    } block_disk_ptr;
+};
+
 #endif //BLOCK_TYPES_DISK_H

@@ -89,4 +89,16 @@ struct block_meta_mem {
     struct linked_list_CL_sys_block_avaliable_mem* list_cells;
 };
 
+
+struct block_mem_type_ref {
+    enum block_signature sign;
+    union block_mem_ptr {
+        struct block_head_mem* block_head_ptr;
+        struct block_data_fixed_cells_mem* block_data_fc_ptr;
+        struct block_data_variable_cells_mem* block_data_vc_ptr;
+        struct block_names_mem* block_names_ptr;
+        struct block_meta_mem* block_meta_ptr;
+    } block_mem_ptr;
+};
+
 #endif //BLOCK_TYPES_MEM_H
