@@ -30,7 +30,7 @@ struct Cl_value {
     enum cell_signature sign;
     enum data_type value_type;
     unsigned int value_size;
-    byte value[];
+    m_byte value[];
 };
 
 /* Cell type for storing values larger than a capacity of data block.

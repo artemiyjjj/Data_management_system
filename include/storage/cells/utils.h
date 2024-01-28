@@ -1,7 +1,10 @@
 #ifndef CELL_UTILS_H
 #define CELL_UTILS_H
 
+#include "common/data_types.h"
 #include "storage/blocks/utils.h"
+#include <stddef.h>
+#include "utils/types.h"
 
 /*
 Signatures of cell-structure types for cells storing different data-types

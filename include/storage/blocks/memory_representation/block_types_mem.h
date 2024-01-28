@@ -31,8 +31,9 @@ struct block_head_mem {
     struct cell_index root_data_cell;
     CL_key_mem* root_cell_mem;
     struct {
-        unsigned int blocks_amount;
         unsigned int occupied_cells_amount;
+        block_offset new_cell_start;
+        unsigned int blocks_amount;
         block_index next_head_block;
     } state;
     struct linked_list_CL_sys_block_head_info_mem* list_cells;
@@ -45,14 +46,12 @@ struct block_data_fixed_cells_mem {
     unsigned int cell_length;
     struct {
         unsigned int free_cells_amount;
-        // Related to data allignment and distribution mechanisms. (Можно и в дисковое запихнуть, можно вынести в механизм вставки новых значений)
         block_offset new_cell_start;
-        block_offset new_value_start;
     } state;
     enum cell_signature cell_sign;
     union {
-      struct linked_list_CL_key_mem* list_keys;
-      struct linked_list_CL_value_mem* list_values;
+        struct linked_list_CL_key_mem* list_keys;
+        struct linked_list_CL_value_mem* list_values;
     } list;
 };
 
@@ -62,7 +61,8 @@ struct block_data_variable_cells_mem {
     block_index bl_index;
     struct {
         unsigned int free_bytes_amount;
-        block_offset free_space_start;
+        block_offset new_cell_start;
+        block_offset new_value_start;
     } state;
     struct linked_list_CL_value_mem* list_cells;
 };
@@ -73,7 +73,8 @@ struct block_names_mem {
     block_index bl_index;
     struct {
         unsigned int free_bytes_amount;
-        block_offset free_space_start_tail;
+        block_offset new_cell_start;
+        block_offset new_value_start;
     } state;
     struct linked_list_CL_value_mem* list_cells;
 };
@@ -82,9 +83,11 @@ struct block_meta_mem {
     bool changed;
     enum block_signature sign;
     block_index bl_index;
-    block_index next_block_in_subsystem;
+    unsigned int cell_length;
     struct {
         unsigned int free_cells_amount_in_block;
+        block_offset new_cell_start;
+        block_index next_block_in_subsystem;
     } state;
     struct linked_list_CL_sys_block_avaliable_mem* list_cells;
 };

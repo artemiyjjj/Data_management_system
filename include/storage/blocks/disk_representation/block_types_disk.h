@@ -24,11 +24,12 @@ struct block_head {
     unsigned int cell_length;
     struct cell_index root_data_cell;
     struct {
-        int blocks_amount;
         unsigned int occupied_cells_amount;
+        block_offset new_cell_start;
+        unsigned int blocks_amount;
         block_index next_head_block;
     } state;
-    byte block_contents[];
+    m_byte block_contents[];
 };
 
 /* Block containing data cells, possibly of any cell type, with
@@ -45,8 +46,9 @@ struct block_data_fixed_cells {
     unsigned int cell_lenght;
     struct {
         unsigned int free_cells_amount;
+        block_offset new_cell_start;
     } state;
-    byte block_contents[];
+    m_byte block_contents[];
 };
 
 /* Block containing data cells of any cell type and lenght of \
@@ -63,9 +65,10 @@ struct block_data_variable_cells {
         unsigned int free_bytes_amount;
         /* Position in block where free space starts, starting
          after the last used element. */
-        block_offset free_space_start;
+        block_offset new_cell_start;
+        block_offset new_value_start;
     } state;
-    byte block_contents[];
+    m_byte block_contents[];
 };
 
 /* Block containing key-cell's names.
@@ -79,9 +82,10 @@ struct block_names {
     block_index bl_index;
     struct {
         unsigned int free_bytes_amount;
-        block_offset free_space_start_tail;
+        block_offset new_cell_start;
+        block_offset new_value_start;
     } state;
-    byte block_contents[];
+    m_byte block_contents[];
 };
 
 /* Block containing information about cells, which is used by
@@ -94,15 +98,17 @@ Signatures:
 struct block_meta {
     enum block_signature sign;
     block_index bl_index;
-    block_index next_block_in_subsystem;
+    unsigned int cell_lenght;
     struct {
         unsigned int free_cells_amount_in_block;
+        block_offset new_cell_start;
+        block_index next_block_in_subsystem;
     } state;
-    byte block_contents[];
+    m_byte block_contents[];
 };
 
 struct block_disk_type_ref {
-    enum block_signature sigm;
+    enum block_signature sign;
     union block_disk_ptr {
         struct block_head* block_head_ptr;
         struct block_data_fixed_cells* block_data_fc_ptr;
