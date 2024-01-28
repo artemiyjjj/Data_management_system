@@ -21,7 +21,7 @@ enum file_open_codes create_file_new_storage(const char filename[], int* const f
 /* Closes stoarage. Uses then program exits. */
 enum file_close_codes close_file_storage(int fd);
 
-
+// add incompatible page size error handler
 enum mmap_codes load_block(const int  fd, const unsigned int file_offset);
 
 enum munmap_codes unload_block(const int fd, const unsigned int file_offset);
