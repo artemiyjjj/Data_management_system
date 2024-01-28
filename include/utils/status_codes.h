@@ -13,7 +13,8 @@ enum file_close_codes {
 
 enum mmap_codes {
     MMAP_SUCCEED = 0,
-    MMAP_FAILED
+    MMAP_FAILED,
+    MMAP_FAILED_INCOMPATIBLE_PAGE_SIZE,
 };
 
 enum msync_codes {
@@ -39,6 +40,11 @@ enum alloc_codes {
 enum storage_statuses {
     STORAGE_INIT_SUCCED = 0,
     STORAGE_INIT_FAILED,
+};
+
+enum cell_parsing_statuses {
+    CELL_PARSING_SUCCEED = 0,
+    CELL_PARSING_FAILED,
 };
 
 enum block_parsing_statuses {
