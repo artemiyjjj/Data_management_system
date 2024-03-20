@@ -2,6 +2,7 @@
 #define CELL_TYPES_MEM_H
 
 #include <stdbool.h>
+
 #include "common/data_types.h"
 #include "storage/blocks/utils.h"
 
@@ -70,7 +71,7 @@ typedef struct Cl_sys_block_head_info_mem {
     unsigned int avaliable_space;
 } Cl_sys_block_head_info_mem;
 
-
+// do not use
 typedef struct Cl_sys_block_avaliable_mem {
     enum cell_signature sign;
     struct cell_index cell_index;
@@ -78,7 +79,7 @@ typedef struct Cl_sys_block_avaliable_mem {
 } Cl_sys_block_avaliable_mem;
 
 /* Common structure for cell initialization. */
-struct cell_mem_type_ref {
+struct cell_mem_sign_ref {
     enum cell_signature sign;
     union cell_mem_ptr {
         struct Cl_key_mem* cell_key;
@@ -91,6 +92,6 @@ struct cell_mem_type_ref {
 };
 
 
-int get_mem_cell_size(const enum cell_signature cell_sign);
+int get_mem_cell_size(const struct cell_mem_sign_ref* const cell_ref);
 
 #endif

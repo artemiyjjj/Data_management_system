@@ -107,15 +107,19 @@ struct block_meta {
     m_byte block_contents[];
 };
 
-struct block_disk_type_ref {
+/* Structure to represent any type of block
+ *
+ * Use it's signature to determine block type.
+*/
+struct block_file_sign_ref {
     enum block_signature sign;
-    union block_disk_ptr {
+    union block_file_ptr {
         struct block_head* block_head_ptr;
         struct block_data_fixed_cells* block_data_fc_ptr;
         struct block_data_variable_cells* block_data_vc_ptr;
         struct block_names* block_names_ptr;
         struct block_meta* block_meta_ptr;
-    } block_disk_ptr;
+    } block_file_ptr;
 };
 
 #endif //BLOCK_TYPES_DISK_H

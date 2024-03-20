@@ -6,35 +6,37 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <sys/mman.h>
+#include "storage/utils.h"
 
 #include "utils/status_codes.h"
 
-/* Externs from A.c ...*/
-extern unsigned int block_size;
-
 /* Opens existing storage. */
-enum file_open_codes open_file_storage(const char filename[], int* const fd);
+enum file_open_code open_file_storage(const char filename[], int* const fd);
 
 /* Creates a new file for storage. */
-enum file_open_codes create_file_new_storage(const char filename[], int* const fd);
+enum file_open_code create_file_new_storage(const char filename[], int* const fd);
 
 /* Closes stoarage. Uses then program exits. */
-enum file_close_codes close_file_storage(int fd);
+enum file_close_code close_file_storage(const struct storage_info storage_info);
 
 // add incompatible page size error handler
-enum mmap_codes load_block(const int  fd, const unsigned int file_offset);
+enum mmap_code load_block(const struct storage_info storage_info, const unsigned int file_offset, void** block_file);
 
-enum munmap_codes unload_block(const int fd, const unsigned int file_offset);
+enum munmap_code unload_block(const struct storage_info storage_info, void* block_file);
 
 /* Function to update block contents on corresponding segment in file. */
-enum msync_codes sync_block(const int fd, void* const block_disk_representation);
+enum msync_code sync_block(const struct storage_info storage_info, void* const block_file);
 // todo можно ли просматривать статус page.dirty через системные вызовы?
 // Если да, то круто, иначе нужно создать в каждом block_* в памяти индикатор изменения значений 
 
-/* Function to store newly created block in file. */
-enum truncate_codes write_new_block_to_file(const int fd, const unsigned int file_offset, void* const block_disk_representation);
+/* Function to create block in file.
+ *
+ * @arg file_offset - offset from the file start, where new block should start.
+ */
+enum truncate_code create_empty_block(const struct storage_info storage_info, const unsigned int file_offset);
 
-enum truncate_codes delete_block_from_file(const int fd, const unsigned int file_offset);
+enum truncate_code delete_block_from_file(const struct storage_info storage_info, const unsigned int file_offset);
 /* todo логика удаления блока
  для избежания фрагментации данных:
  - перемещение последующих блоков назад - дорого;

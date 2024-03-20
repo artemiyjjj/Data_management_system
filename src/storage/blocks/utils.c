@@ -1,7 +1,8 @@
 #include "storage/blocks/utils.h"
 
-extern unsigned int block_size;
+#include "storage/blocks/block_manager_pub.h"
 
-unsigned int convert_block_index_to_file_offset(const block_index bl_index) {
+/* Calculates file offset from a given block length and block index.*/
+unsigned int compute_file_offset_from_block_index(const unsigned int block_size, const block_index bl_index) {
 	return block_size * bl_index;
 }

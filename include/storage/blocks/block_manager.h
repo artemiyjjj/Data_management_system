@@ -1,40 +1,30 @@
 #ifndef BLOCK_MANAGER_H
 #define BLOCK_MANAGER_H
 
+#include <stdio.h>
+
+#include "file_representation/block_file.h"
+#include "storage/blocks/block_manager_pub.h"
 #include "storage/blocks/utils.h"
-#include "storage/blocks/disk_representation/block_disk.h"
+#include "utils/status_codes.h"
 
-struct block_mem_ptr_array {
-	unsigned int mem_block_load_amount;
-	struct block_mem_type_ref block_mem_sign_and_pointers[];
+
+enum block_manager_creation_mode {
+	BM_CREATE_MODE_NEW = 0,
+	BM_CREATE_MODE_EXISTING
 };
 
-struct block_disk_ptr_array {
-	unsigned int disk_block_load_amount;
-	struct block_disk_type_ref block_disk_sign_and_pointers[];
-};
+enum block_init_status init_block_manager(const struct block_manager_config bl_manager_config, const enum block_manager_creation_mode, struct block_manager* const block_manager);
 
-/*
+void delete_block_manager_struct(const struct block_manager* block_manager);
 
- If disk block is loaded, address will be valid, otherwise - NULL.
- */
-struct block_manager {
-    block_index new_avaliable_block_index;
+void select_cell(char* cell_name); //todo selections, queries and so
 
-    struct block_mem_ptr_array* block_mem_pointers;
-    struct block_disk_ptr_array* block_disk_pointers;
-};
+enum block_manager_blocks_creation_status create_block(struct block_manager* const block_manager, const enum block_signature bl_signature);
 
-void init_block_manager(int storage_fd);
+/* Performs update of block in memory and file form and then sync it with file. */
+enum block_manager_blocks_update_status update_block(struct block_manager* const block_manager, const block_index bl_index, enum block_update_mode update_mode, char* cell_name, struct data cell_data);
 
-void select_cell(char* cell_name);
-
-void create_block(enum block_signature bl_signature);
-
-/* Performs update of block in memory and disk form and then sync it with file. */
-void update_block(const block_index bl_index, enum block_update_mode update_mode, char* cell_name, struct data cell_data);
-
-void delete_block(const block_index bl_index);
-
+enum block_manager_blocks_deletion_status delete_block(struct block_manager* const block_manager, const block_index bl_index);
 
 #endif //BLOCK_MANAGER_H

@@ -1,9 +1,9 @@
 #ifndef CELL_TYPES_H
 #define CELL_TYPES_H
 
-#include "storage/cells/utils.h"
 #include "common/data_types.h"
 #include "storage/blocks/utils.h"
+#include "storage/cells/utils.h"
 #include "utils/types.h"
 
 /* Cell type for stroing key entities with name, their subkeys and attributes.
@@ -88,23 +88,19 @@ struct Cl_sys_block_avaliable {
 };
 
 
-struct cell_disk_type_ref {
+struct cell_file_sign_ref {
     enum cell_signature sign;
-    union cell_disk_ptr {
+    union cell_file_ptr {
 		struct Cl_key* cell_key;
         struct Cl_value* cell_value;
         struct Cl_big_value* cell_big_value;
         struct Cl_index* cell_index;
         struct Cl_sys_block_head_info* cell_head_info;
         struct Cl_sys_block_avaliable* cell_avaliable;
-    } cell_disk_ptr;
+    } cell_file_ptr;
 };
 
 
-int get_disk_cell_size(const enum cell_signature cell_sign);
-
-int get_real_disk_cell_size(void* const disk_cell_ptr);
-
-int get_real_disk_cell_size_from_mem_cell(void* const mem_cell_ptr);
+int get_file_cell_size(const struct cell_file_sign_ref* const cell_ref);
 
 #endif //CELL_TYPES_H

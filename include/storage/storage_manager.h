@@ -4,15 +4,16 @@
 #include <stdio.h>
 #include "controller/queries/queries.h"
 #include "storage/blocks/block_manager.h"
-#include "storage/file/file_interaction.h"
+#include "storage/storage_manager_pub.h"
 #include "utils/status_codes.h"
 
 #include "storage/structure/document_tree/document_tree.h"
 
 // TREE_DECLARE(DT_node)
 
-enum storage_statuses init_storage(const char filename[], const unsigned int param_block_size);
+enum storage_init_status init_storage(const char filename[], const struct block_manager_config bl_manager_config, struct storage_manager* const storage_manager);
 
+enum storage_close_status close_storage(struct storage_manager* const storage_manager);
 
 void select_value(struct select_query* const query);
 

@@ -3,11 +3,12 @@
 
 #include <stdint.h>
 
+
 typedef unsigned int block_index;
 typedef unsigned int block_offset;
 typedef unsigned int block_capasity;
 
-unsigned int convert_block_index_to_file_offset(const block_index bl_index);
+unsigned int compute_file_offset_from_block_index(const unsigned int block_size, const block_index bl_index);
 
 /* Signatures that defines types of blocks.
     - Name block contains names of key and value cells.
@@ -25,6 +26,7 @@ enum block_signature {
 enum block_update_mode {
     BL_UPD_ADD = 0,
     BL_UPD_REMOVE,
+    BL_UPD_UPDATE
 };
 
 enum cell_select_mode {
